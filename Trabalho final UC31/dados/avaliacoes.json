@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "curso_id": 1,
+    "autor": "Maria",
+    "estrela": 5,
+    "comentario": "Ótimo conteúdo prático e professores muito dedicados.",
+    "data": "2026-07-30"
+  },
+  {
+    "id": 2,
+    "curso_id": 1,
+    "autor": "João",
+    "estrela": 4,
+    "comentario": "Boa experiência geral; podia haver mais projetos em equipa.",
+    "data": "2026-07-28"
+  },
+  {
+    "id": 3,
+    "curso_id": 2,
+    "autor": "Ana",
+    "estrela": 5,
+    "comentario": "Excelente para quem quer entrar em UX/UI.",
+    "data": "2026-07-29"
+  }
+]

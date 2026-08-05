@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}SenaCursos{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    .skip-link:focus { left: 1rem; top: 1rem; width: auto; height: auto; background: #fff; padding: .5rem 1rem; z-index: 1000; border-radius: 4px; box-shadow: 0 0 6px rgba(0,0,0,.2); }
+    .star { color: #f5c518; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar para o conteúdo</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">SenaCursos</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Alternar navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('listar_cursos') }}">Cursos</a></li>
+        </ul>
+        <form class="d-flex me-3" role="search" method="get" action="{{ url_for('listar_cursos') }}">
+          <label for="q-navbar" class="visually-hidden">Pesquisar</label>
+          <input id="q-navbar" name="q" class="form-control me-2" type="search" placeholder="Pesquisar por nome ou unidade" value="{{ q|default('') }}">
+          <button class="btn btn-outline-primary" type="submit">Pesquisar</button>
+        </form>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          {% if session.get('is_admin') %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('admin') }}">Painel</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('cadastrar') }}">+ Cadastrar</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main id="main" class="container my-4" role="main">
+    <div aria-live="polite" aria-atomic="true">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, msg in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ msg }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="bg-light text-center py-3 mt-4" role="contentinfo">
+    <div class="container">
+      <small>© SenaCursos</small>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

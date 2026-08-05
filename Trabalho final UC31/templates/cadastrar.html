@@ -1,0 +1,34 @@
+<form method="post" action="{{ url_for('cadastrar') }}">
+  <div class="mb-3">
+    <label for="nome" class="form-label">Nome *</label>
+    <input id="nome" name="nome" class="form-control" type="text" required value="{{ curso.nome if curso is defined else '' }}">
+  </div>
+  <div class="mb-3">
+    <label for="morada" class="form-label">Morada</label>
+    <input id="morada" name="morada" class="form-control" type="text" value="{{ curso.morada if curso is defined else '' }}">
+  </div>
+  <div class="mb-3">
+    <label for="unidade" class="form-label">Unidade</label>
+    <input id="unidade" name="unidade" class="form-control" type="text" value="{{ curso.unidade if curso is defined else '' }}">
+  </div>
+  <div class="mb-3">
+    <label for="descricao" class="form-label">Descrição</label>
+    <textarea id="descricao" name="descricao" class="form-control" rows="3">{{ curso.descricao if curso is defined else '' }}</textarea>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label for="vagas" class="form-label">Vagas</label>
+      <input id="vagas" name="vagas" class="form-control" type="number" min="0" value="{{ curso.vagas if curso is defined else '' }}">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="telefone" class="form-label">Telefone</label>
+      <input id="telefone" name="telefone" class="form-control" type="text" value="{{ curso.telefone if curso is defined else '' }}">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="site" class="form-label">Site</label>
+      <input id="site" name="site" class="form-control" type="url" value="{{ curso.site if curso is defined else '' }}">
+    </div>
+  </div>
+  <button class="btn btn-success" type="submit">Cadastrar</button>
+  <a class="btn btn-outline-secondary" href="{{ url_for('listar_cursos') }}">Cancelar</a>
+</form>

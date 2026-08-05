@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}{{ curso.nome }} — SenaCursos{% endblock %}
+{% block content %}
+  <article>
+    <header class="mb-3">
+      <h1 class="h3">{{ curso.nome }}</h1>
+      <p class="text-muted">{{ curso.unidade }} — {{ curso.morada }}</p>
+      <p>
+        <span class="star" aria-hidden="true">{% for i in range(1,6) %}{% if i <= (curso.media|round(0,'floor')) %}★{% else %}☆{% endif %}{% endfor %}</span>
+        <strong class="ms-2">{{ curso.media }}</strong>
+        <small class="text-muted"> — {{ curso.num_avaliacoes }} avaliações</small>
+      </p>
+    </header>
+
+    <section class="mb-4">
+      <p>{{ curso.descricao }}</p>
+      <dl class="row">
+        <dt class="col-sm-3">Vagas</dt><dd class="col-sm-9">{{ curso.vagas }}</dd>
+        <dt class="col-sm-3">Telefone</dt><dd class="col-sm-9">{{ curso.telefone }}</dd>
+        <dt class="col-sm-3">Site</dt><dd class="col-sm-9">
+          {% if curso.site %}
+            <a href="{{ curso.site }}" target="_blank" rel="noopener">{{ curso.site }}</a>
+          {% else %}
+            —
+          {% endif %}
+        </dd>
+      </dl>
+      <p>
+        {% if session.get('is_admin') %}
+          <a class="btn btn-secondary" href="{{ url_for('editar', id=curso.id) }}">Editar curso</a>
+        {% endif %}
+        <a class="btn btn-outline-primary" href="{{ url_for('listar_cursos') }}">Voltar à lista</a>
+      </p>
+    </section>
+
+    <section class="mb-4" aria-labelledby="avaliacoes-title">
+      <h2 id="avaliacoes-title" class="h5">Avaliações</h2>
+      {% if avaliacoes and avaliacoes|length > 0 %}
+        <ul class="list-group mb-3">
+          {% for a in avaliacoes %}
+            <li class="list-group-item">
+              <div class="d-flex w-100 justify-content-between">
+                <h3 class="h6 mb-1">{{ a.autor | default('Anónimo') }}</h3>
+                <small class="text-muted">{{ a.data | default('') }}</small>
+              </div>
+              <p class="mb-1">
+                <span class="star" aria-hidden="true">{% for i in range(1,6) %}{% if i <= (a.estrela|default(0)) %}★{% else %}☆{% endif %}{% endfor %}</span>
+                <span class="ms-2 text-muted">{{ a.estrela | default(0) }} estrelas</span>
+              </p>
+              <p class="mb-0">{{ a.comentario | default('') }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Não há avaliações para este curso.</p>
+      {% endif %}
+    </section>
+
+    <section aria-labelledby="avaliar-title">
+      <h2 id="avaliar-title" class="h5">Deixe a sua avaliação</h2>
+      <form method="post" action="{{ url_for('avaliar', curso_id=curso.id) }}">
+        <div class="mb-2">
+          <label for="autor" class="form-label">Nome</label>
+          <input id="autor" name="autor" class="form-control" type="text" placeholder="Seu nome (ou Anónimo)">
+        </div>
+        <div class="mb-2">
+          <label for="estrela" class="form-label">Estrelas</label>
+          <select id="estrela" name="estrela" class="form-select" required>
+            <option value="">Escolher</option>
+            <option value="5">5 — Excelente</option>
+            <option value="4">4 — Muito bom</option>
+            <option value="3">3 — Bom</option>
+            <option value="2">2 — Razoável</option>
+            <option value="1">1 — Fraco</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="comentario" class="form-label">Comentário</label>
+          <textarea id="comentario" name="comentario" class="form-control" rows="3" placeholder="Escreva a sua opinião (opcional)"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Enviar avaliação</button>
+      </form>
+    </section>
+  </article>
+{% endblock %}

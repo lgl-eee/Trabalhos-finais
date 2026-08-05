@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Login — SenaCursos{% endblock %}
+{% block content %}
+  <h1 class="h4 mb-3">Área administrativa — Login</h1>
+  <form method="post" action="{{ url_for('login', next=request.args.get('next')) }}">
+    <div class="mb-3">
+      <label for="username" class="form-label">Utilizador</label>
+      <input id="username" name="username" class="form-control" type="text" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input id="password" name="password" class="form-control" type="password" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Entrar</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for('index') }}">Cancelar</a>
+  </form>
+{% endblock %}

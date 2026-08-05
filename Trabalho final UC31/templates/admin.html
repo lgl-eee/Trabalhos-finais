@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Admin — SenaCursos{% endblock %}
+{% block content %}
+  <h1 class="h4 mb-3">Painel administrativo</h1>
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h2 class="h5">Total de cursos</h2>
+        <p class="display-6">{{ total_cursos }}</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h2 class="h5">Total de avaliações</h2>
+        <p class="display-6">{{ total_avaliacoes }}</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h2 class="h5">Top 5</h2>
+        <ol class="ps-3">
+          {% for c in top5 %}
+            <li><a href="{{ url_for('detalhes_curso', id=c.id) }}">{{ c.nome }}</a> — {{ c.media }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
+  </div>
+  <section>
+    <h2 class="h5">Operações rápidas</h2>
+    <p class="text-muted">Para apagar ou editar cursos, use a lista de cursos.</p>
+  </section>
+{% endblock %}

@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "nome": "Estética na SENAC RN",
+    "morada": "Rua 24 de junho, 1074",
+    "unidade": "Lisboa",
+    "descricao": "O Curso Técnico em Estética do Senac capacita profissionais para realizar procedimentos faciais e corporais, avaliar as condições da pele e operar equipamentos eletroterápicos com foco em saúde, bem-estar e empreendedorismo.",
+    "vagas": 60,
+    "telefone": "(84) 3331-1585",
+    "site": "https://www.ead.senac.br/polos/rn/assu/"
+  },
+  {
+    "id": 2,
+    "nome": "Enfermagem na SENAC RN",
+    "morada": "Rua São Tomé, 444",
+    "unidade": "Centro",
+    "descricao": "Formação em design, UX/UI e ferramentas digitais.",
+    "vagas": 12,
+    "telefone": "(84) 3422 - 5004",
+    "site": "https://www.rn.senac.br/unidade/senac-centro"
+  },
+  {
+    "id": 3,
+    "nome": "Enfermagem na SENAC RN",
+    "morada": "Rua Dr. João Marcelino, 867",
+    "unidade": "Mossoró",
+    "descricao": "Se você se interessa por melhorar a qualidade de vida das pessoas, venha para essa jornada de conhecimento e aprenda como atuar na gestão, pesquisa e assistência à saúde, em especial no SUS.\r\n\r\nTambém aprenderá sobre humanização do cuidado às pessoas, ações de prevenção, de políticas públicas e indicadores globais de saúde.",
+    "vagas": 25,
+    "telefone": "(84) 4005-1000",
+    "site": "https://www.rn.senac.br/unidade/senac-mossoro"
+  },
+  {
+    "id": 4,
+    "nome": "Cozinheiro na SENAC RN",
+    "morada": "Rua São Tomé, 444",
+    "unidade": "Centro",
+    "descricao": "capacita profissionais com foco em técnicas culinárias avançadas, higiene e segurança alimentar, e gestão de cozinhas. A formação possui uma carga horária padrão de 500 horas e combina aulas teóricas e práticas em laboratórios equipados.",
+    "vagas": 15,
+    "telefone": "(84) 4005 - 1013",
+    "site": "https://www.rn.senac.br/unidade/senac-centro"
+  },
+  {
+    "id": 5,
+    "nome": "Web Design na SENAC RN",
+    "morada": "Avenida Almirante Alexandrino de Alencar, 556",
+    "unidade": "Alecrim",
+    "descricao": "O curso de Web Design do Senac capacita o aluno a planejar, criar e publicar interfaces de websites. O programa foca em usabilidade, acessibilidade e navegabilidade, ensinando a transformar conceitos visuais em páginas atraentes e funcionais para a internet.",
+    "vagas": 12,
+    "telefone": "(84) 4005 - 1072",
+    "site": "https://www.rn.senac.br/unidade/senac-alecrim"
+  },
+  {
+    "id": 6,
+    "nome": "Assistente de Recursos Humanos na SENAC RN",
+    "morada": "Rua São Tomé, 444",
+    "unidade": "Centro",
+    "descricao": "curso de Assistente de Recursos Humanos do Senac possui carga horária de 160 horas e capacita profissionais para apoiar rotinas de recrutamento, seleção, integração, treinamento, avaliação de desempenho, cargos e salários, conforme as leis trabalhistas.",
+    "vagas": 19,
+    "telefone": "(84) 4005 - 1013",
+    "site": "https://www.rn.senac.br/unidade/senac-centro"
+  },
+  {
+    "id": 7,
+    "nome": "Vendedor de Produtos e Serviços Ópticos na SENAC RN",
+    "morada": "Rua Dr. Renato Dantas, 543",
+    "unidade": "Caicó",
+    "descricao": "O curso de Vendedor de Produtos e Serviços Ópticos do Senac capacita profissionais para o mercado varejista de saúde visual. Com carga horária média de 240 horas, o aluno aprende a interpretar receitas médicas, indicar armações e lentes adequadas à estética e ergonomia, realizar ajustes e orientar sobre a conservação dos óculos.",
+    "vagas": 5,
+    "telefone": "(84) 3421 - 3933",
+    "site": "https://www.rn.senac.br/unidade/senac-caico"
+  },
+  {
+    "id": 8,
+    "nome": "Assistente de Pessoal na SENAC RN",
+    "morada": "Rua Dr. Renato Dantas, 543",
+    "unidade": "Caicó",
+    "descricao": "O curso de Assistente de Pessoal do Senac capacita profissionais para executar rotinas de departamento pessoal e gestão de pessoas. O aluno aprende a aplicar a legislação trabalhista e previdenciária em processos de admissão, controle de benefícios, folha de pagamento e demissão de colaboradores. A carga horária média é de 160 horas.",
+    "vagas": 12,
+    "telefone": "(84) 3421 - 3933",
+    "site": "https://www.rn.senac.br/unidade/senac-caico"
+  },
+  {
+    "id": 9,
+    "nome": "Assistente de Crédito e Cobrança na SENAC RN",
+    "morada": "Travessa Macaé, 2875",
+    "unidade": "Zona norte",
+    "descricao": "O Assistente de Crédito e Cobrança qualificado pelo Senac é o profissional que executa rotinas administrativas e financeiras de contas a receber, realiza análises de cadastros de clientes, acompanha negociações de dívidas e aplica critérios legais e internos para garantir a saúde financeira da empresa.",
+    "vagas": 9,
+    "telefone": "(84) 4005 - 1094",
+    "site": "https://www.rn.senac.br/unidade/senac-zona-norte"
+  },
+  {
+    "id": 10,
+    "nome": "Iniciação à Fotografia na SENAC RN",
+    "morada": "Rua Doutor João Marcelino, 867",
+    "unidade": "Mossoró",
+    "descricao": "Os cursos de iniciação à fotografia do Senac (como Introdução à Fotografia Digital ou Formação Básica) ensinam a operar câmeras no modo manual, dominar a luz, o foco e a composição visual. Com carga horária média de 48h a 60h, são voltados para iniciantes e hobbistas.",
+    "vagas": 7,
+    "telefone": "(84) 3422 - 5004",
+    "site": "https://www.rn.senac.br/unidade/senac-mossoro"
+  },
+  {
+    "id": 11,
+    "nome": "Gerência de Vendas na SENAC RN",
+    "morada": "Rua São Tomé, 444",
+    "unidade": "Centro",
+    "descricao": "gerência e gestão de vendas capacitam profissionais para liderar equipes comerciais, criar estratégias de mercado, planejar ações de varejo e tomar decisões baseadas em indicadores de desempenho para alavancar resultados organizacionais.",
+    "vagas": 14,
+    "telefone": "(84) 4005 - 1013",
+    "site": "https://www.rn.senac.br/unidade/senac-centro"
+  },
+  {
+    "id": 12,
+    "nome": "Fit Chef na SENAC RN",
+    "morada": "Rua São Tomé, 444",
+    "unidade": "Centro",
+    "descricao": "O curso Fit Chef do Senac capacita o aluno para preparar pratos saudáveis da gastronomia fit, ensinando a transformar ingredientes naturais em receitas criativas e equilibradas, desde marmitas fitness até sobremesas saudáveis, com foco em técnicas práticas de culinária e alimentação balanceada.",
+    "vagas": 22,
+    "telefone": "(84) 4005 - 1013",
+    "site": "https://www.rn.senac.br/unidade/senac-centro"
+  },
+  {
+    "id": 13,
+    "nome": "Preparo de Cupcake e Brigadeiro Gourmet na SENAC RN",
+    "morada": "Rua Doutor João Marcelino, 867",
+    "unidade": "Mossoró",
+    "descricao": "Preparo de Cupcake e Brigadeiro Gourmet do Senac capacita o aluno a produzir doces sofisticados para festas e comercialização. O programa ensina técnicas de massas, recheios, montagem, decoração artística, uso de ingredientes nobres e noções básicas de higiene e manipulação de alimentos.",
+    "vagas": 25,
+    "telefone": "(84) 3422 - 5004",
+    "site": "https://www.rn.senac.br/unidade/senac-mossoro"
+  },
+  {
+    "id": 14,
+    "nome": "Comida de Boteco na SENAC RN",
+    "morada": "Rua Doutor João Marcelino, 867",
+    "unidade": "Mossoró",
+    "descricao": "O curso de Comida de Boteco (ou Cardápio de Botequim) do Senac ensina técnicas de preparo de petiscos, porções clássicas e caldos. O aluno aprende regras de higiene alimentar, uso correto de utensílios, montagem de pratos e dicas de harmonização com bebidas, focado em quem deseja empreender ou trabalhar em bares.",
+    "vagas": 21,
+    "telefone": "(84) 3422 - 5004",
+    "site": "https://www.rn.senac.br/unidade/senac-mossoro"
+  },
+  {
+    "id": 15,
+    "nome": "Culinária Light e Diet na SENAC RN",
+    "morada": "Rua Doutor João Marcelino, 867",
+    "unidade": "Mossoró",
+    "descricao": "O curso de Culinária Light e Diet (ou Cardápio Diet e Light) do Senac capacita o aluno a preparar pratos saudáveis e equilibrados. Ele ensina a diferenciar produtos diet, light e zero, aplicar técnicas de higiene na manipulação de alimentos e criar entradas, pratos principais e sobremesas saborosas.",
+    "vagas": 32,
+    "telefone": "(84) 3422 - 5004",
+    "site": "https://www.rn.senac.br/unidade/senac-mossoro"
+  }
+]
