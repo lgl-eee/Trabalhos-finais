@@ -1,0 +1,39 @@
+{# Componentes reutilizáveis #}
+
+{% macro card_item(item) %}
+{% set tipo = TIPOS[item.tipo] %}
+{% set situacao = STATUS_ITEM[item.status] %}
+<article class="card cartao-item h-100">
+  <div class="card-body d-flex flex-column gap-2">
+    <div class="d-flex justify-content-between align-items-center gap-2">
+      <span class="etiqueta {{ tipo.classe }}">{{ tipo.rotulo }}</span>
+      <span class="small fw-semibold {{ situacao.classe }}">{{ situacao.rotulo }}</span>
+    </div>
+    <span class="texto-sobretitulo">{{ item.categoria }}</span>
+    <h3 class="h5 mb-0"><a class="stretched-link stretched-link-titulo" href="{{ url_for('item', codigo=item.apelido or item.codigo) }}">{{ item.titulo }}</a></h3>
+    {% if item.descricao %}<p class="small texto-suave mb-0 limite-2-linhas">{{ item.descricao }}</p>{% endif %}
+    <ul class="list-unstyled small texto-suave border-top pt-2 mt-auto mb-0">
+      <li><i class="bi bi-geo-alt" aria-hidden="true"></i> {{ item.local or item.unidade or 'Local não informado' }}</li>
+      <li class="d-flex justify-content-between gap-2">
+        <span><i class="bi bi-calendar3" aria-hidden="true"></i> {{ item.data_ocorrido|data_br }}</span>
+        <span class="chip-codigo">{{ item.apelido or item.codigo[:10] }}</span>
+      </li>
+    </ul>
+  </div>
+</article>
+{% endmacro %}
+
+{% macro erro_campo(erros, nome) %}
+  {% if erros.get(nome) %}<div class="invalid-feedback d-block" id="erro-{{ nome }}">{{ erros[nome] }}</div>{% endif %}
+{% endmacro %}
+
+{% macro botao_post(acao, rotulo, classe='btn-outline-primary', campos={}, confirmar=None, icone=None, descricao=None) %}
+<form method="post" action="{{ acao }}" class="d-inline"
+      {% if confirmar %}onsubmit="return confirm('{{ confirmar }}');"{% endif %}>
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  {% for nome, valor in campos.items() %}<input type="hidden" name="{{ nome }}" value="{{ valor }}">{% endfor %}
+  <button type="submit" class="btn btn-sm {{ classe }}"{% if descricao %} aria-label="{{ descricao }}"{% endif %}>
+    {% if icone %}<i class="bi {{ icone }}" aria-hidden="true"></i>{% endif %}{% if rotulo %} {{ rotulo }}{% endif %}
+  </button>
+</form>
+{% endmacro %}

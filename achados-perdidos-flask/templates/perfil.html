@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "_macros.html" import card_item with context %}
+{% block titulo %}Registros de @{{ pessoa.username }} — Achados &amp; Perdidos Senac{% endblock %}
+{% block conteudo %}
+<div class="container pt-4">
+  <header class="card p-4 mb-4">
+    <div class="d-flex flex-wrap align-items-center gap-4">
+      <span class="marca-icone marca-grande fonte-titulo" aria-hidden="true">{{ pessoa.nome[:1]|upper }}</span>
+      <div class="flex-grow-1">
+        <p class="texto-sobretitulo mb-1">@{{ pessoa.username }}</p>
+        <h1 class="fonte-titulo h2 mb-1">{{ pessoa.nome }}</h1>
+        {% if pessoa.bio %}<p class="texto-suave mb-0">{{ pessoa.bio }}</p>{% endif %}
+      </div>
+      <div class="text-end">
+        <p class="texto-sobretitulo mb-0">Registros</p>
+        <p class="fonte-titulo fs-2 mb-0">{{ itens|length }}</p>
+        <p class="small texto-suave mb-0">{{ devolvidos }} devolvido(s)</p>
+      </div>
+    </div>
+  </header>
+  {% if itens %}
+  <div class="row g-3">{% for item in itens %}<div class="col-sm-6 col-lg-3">{{ card_item(item) }}</div>{% endfor %}</div>
+  {% else %}<p class="texto-suave">Esta pessoa ainda não registrou nenhum item.</p>{% endif %}
+</div>
+{% endblock %}

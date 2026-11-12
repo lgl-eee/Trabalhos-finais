@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% from "_macros.html" import botao_post with context %}
+{% block titulo %}Meus registros — Achados &amp; Perdidos Senac{% endblock %}
+{% block conteudo %}
+<div class="container pt-4">
+  <p class="texto-sobretitulo">Central do aluno</p>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <h1 class="fonte-titulo h2 mb-0">Olá, {{ usuario.nome.split()[0] }}</h1>
+    <a class="btn btn-primary" href="{{ url_for('registrar') }}"><i class="bi bi-plus-circle" aria-hidden="true"></i> Novo registro</a>
+  </div>
+  <p class="texto-suave mt-2">Acompanhe o que você registrou e as reivindicações enviadas e recebidas.</p>
+
+  <div class="row g-4 mt-1">
+    <section class="col-lg-6" aria-labelledby="titulo-itens">
+      <h2 id="titulo-itens" class="h4">Meus itens ({{ itens|length }})</h2>
+      {% for item in itens %}
+      {% set tipo = TIPOS[item.tipo] %}{% set situacao = STATUS_ITEM[item.status] %}
+      <article class="card mb-3"><div class="card-body">
+        <div class="d-flex justify-content-between gap-2">
+          <div class="d-flex flex-wrap gap-2">
+            <span class="etiqueta {{ tipo.classe }}">{{ tipo.rotulo }}</span>
+            <span class="etiqueta {{ situacao.classe }}">{{ situacao.rotulo }}</span>
+          </div>
+          <span class="chip-codigo align-self-start">{{ item.codigo[:12] }}</span>
+        </div>
+        <h3 class="h5 mt-2 mb-0"><a href="{{ url_for('item', codigo=item.apelido or item.codigo) }}">{{ item.titulo }}</a></h3>
+        <p class="small texto-suave">{{ item.local or item.unidade }} · {{ item.data_ocorrido|data_br }}</p>
+        <div class="d-flex flex-wrap gap-2">
+          {% if item.status != 'devolvido' %}{{ botao_post(url_for('mudar_status', item_id=item.id), 'Devolvido', 'btn-outline-primary', {'status': 'devolvido'}, None, 'bi-check2-circle') }}{% endif %}
+          {% if item.status != 'arquivado' %}{{ botao_post(url_for('mudar_status', item_id=item.id), 'Arquivar', 'btn-outline-secondary', {'status': 'arquivado'}) }}{% endif %}
+          {% if item.status != 'aberto' %}{{ botao_post(url_for('mudar_status', item_id=item.id), 'Reabrir', 'btn-outline-secondary', {'status': 'aberto'}) }}{% endif %}
+          <a class="btn btn-sm btn-outline-primary" href="{{ url_for('editar', item_id=item.id) }}">Editar</a>
+          {{ botao_post(url_for('excluir', item_id=item.id), '', 'btn-outline-danger', {}, 'Remover este registro? Esta ação não pode ser desfeita.', 'bi-trash', 'Excluir registro: ' ~ item.titulo) }}
+        </div>
+      </div></article>
+      {% else %}
+      <p class="texto-suave">Você ainda não registrou nenhum item. <a href="{{ url_for('registrar') }}">Faça o primeiro registro</a>.</p>
+      {% endfor %}
+    </section>
+
+    <section class="col-lg-6" aria-labelledby="titulo-reiv">
+      <h2 id="titulo-reiv" class="h4">Reivindicações</h2>
+      <h3 class="h6 texto-sobretitulo mt-3">Recebidas ({{ recebidas|length }})</h3>
+      {% for r in recebidas %}
+      <article class="card mb-2"><div class="card-body small">
+        <p class="fw-semibold mb-1">@{{ r.autor_username }} sobre
+          <a href="{{ url_for('item', codigo=r.item_apelido or r.item_codigo) }}">“{{ r.item_titulo }}”</a></p>
+        <p class="texto-suave mb-2">{{ r.mensagem }}</p>
+        {% if r.status == 'pendente' %}
+        <form method="post" action="{{ url_for('responder', reivindicacao_id=r.id) }}" class="d-flex gap-2">
+          <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+          <button class="btn btn-sm btn-primary" name="acao" value="confirmar" type="submit">Confirmar dono</button>
+          <button class="btn btn-sm btn-outline-secondary" name="acao" value="recusar" type="submit">Recusar</button>
+        </form>
+        {% else %}<span class="texto-suave">Situação: {{ STATUS_REIVINDICACAO[r.status] }}</span>{% endif %}
+      </div></article>
+      {% else %}<p class="small texto-suave">Nenhuma reivindicação recebida.</p>{% endfor %}
+
+      <h3 class="h6 texto-sobretitulo mt-4">Enviadas ({{ enviadas|length }})</h3>
+      {% for r in enviadas %}
+      <article class="card mb-2"><div class="card-body small">
+        <p class="fw-semibold mb-1"><a href="{{ url_for('item', codigo=r.item_apelido or r.item_codigo) }}">{{ r.item_titulo }}</a></p>
+        <p class="texto-suave mb-2">{{ r.mensagem }}</p>
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <span class="texto-suave">Situação: {{ STATUS_REIVINDICACAO[r.status] }} · {{ r.criado_em|data_br }}</span>
+          {% if r.status == 'pendente' %}{{ botao_post(url_for('retirar', reivindicacao_id=r.id), 'Retirar', 'btn-outline-secondary') }}{% endif %}
+        </div>
+      </div></article>
+      {% else %}<p class="small texto-suave">Você ainda não reivindicou nenhum item.</p>{% endfor %}
+    </section>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block titulo %}{{ item.titulo }} — Achados &amp; Perdidos Senac{% endblock %}
+{% block descricao %}Ficha do item {{ item.apelido or item.codigo }}: local, data, unidade e como reivindicar a devolução.{% endblock %}
+{% block conteudo %}
+{% set tipo = TIPOS[item.tipo] %}
+{% set situacao = STATUS_ITEM[item.status] %}
+{% set pagina = url_for('item', codigo=item.apelido or item.codigo) %}
+<div class="container pt-4">
+  <nav aria-label="Você está em"><ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Início</a></li>
+    <li class="breadcrumb-item"><a href="{{ url_for('explorar') }}">Mural</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ item.titulo }}</li>
+  </ol></nav>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="d-flex flex-wrap gap-2">
+        <span class="etiqueta {{ tipo.classe }}">{{ tipo.rotulo }}</span>
+        <span class="etiqueta {{ situacao.classe }}">{{ situacao.rotulo }}</span>
+        <span class="etiqueta">{{ item.categoria }}</span>
+      </div>
+      <h1 class="fonte-titulo display-6 mt-3">{{ item.titulo }}</h1>
+      {% if item.descricao %}<p class="texto-suave" style="white-space: pre-line">{{ item.descricao }}</p>{% endif %}
+
+      <p class="mb-1 small"><span class="texto-suave">Código do registro:</span> <span class="chip-codigo">{{ item.codigo }}</span></p>
+      {% if item.apelido %}<p class="small"><span class="texto-suave">Apelido:</span> <span class="chip-codigo">{{ item.apelido }}</span></p>{% endif %}
+      <p class="small texto-suave">Registrado por
+        <a href="{{ url_for('perfil', username=item.autor_username) }}">@{{ item.autor_username }}</a>
+        em {{ item.criado_em|data_br }}</p>
+    </div>
+
+    <aside class="col-lg-5" aria-label="Detalhes e ações">
+      <div class="card mb-3"><div class="card-body">
+        <h2 class="texto-sobretitulo mb-3">Onde e quando</h2>
+        <ul class="list-unstyled mb-0 d-grid gap-2">
+          <li><i class="bi bi-geo-alt text-primary" aria-hidden="true"></i> {{ item.local or 'Local não informado' }}</li>
+          <li><i class="bi bi-mortarboard text-primary" aria-hidden="true"></i> {{ item.unidade or 'Unidade não informada' }}{% if item.curso %} · {{ item.curso }}{% endif %}</li>
+          <li><i class="bi bi-calendar3 text-primary" aria-hidden="true"></i> Ocorrido em {{ item.data_ocorrido|data_br }}</li>
+          {% if item.contato %}<li><i class="bi bi-telephone text-primary" aria-hidden="true"></i> {{ item.contato }}</li>{% endif %}
+        </ul>
+      </div></div>
+
+      {% if dono %}
+      <div class="card mb-3"><div class="card-body">
+        <h2 class="h5">Você registrou este item</h2>
+        <p class="small texto-suave">Confira as reivindicações abaixo e, após entregar o objeto, marque como devolvido.</p>
+        <div class="d-flex flex-wrap gap-2">
+          {% if item.status != 'devolvido' %}
+          <form method="post" action="{{ url_for('mudar_status', item_id=item.id) }}">
+            <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+            <input type="hidden" name="status" value="devolvido">
+            <input type="hidden" name="voltar" value="{{ pagina }}">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-check2-circle" aria-hidden="true"></i> Marcar como devolvido</button>
+          </form>
+          {% endif %}
+          <a class="btn btn-outline-primary" href="{{ url_for('editar', item_id=item.id) }}"><i class="bi bi-pencil" aria-hidden="true"></i> Editar</a>
+        </div>
+      </div></div>
+      {% elif item.status == 'aberto' %}
+      <form class="card mb-3" method="post" action="{{ url_for('reivindicar', item_id=item.id) }}">
+        <div class="card-body">
+          <h2 class="h5">É seu? Reivindique</h2>
+          {% if usuario %}
+            <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+            <label for="mensagem" class="form-label">Prove com detalhes</label>
+            <textarea id="mensagem" name="mensagem" class="form-control mb-3" rows="4" maxlength="600" required minlength="10"
+              placeholder="Ex.: é uma garrafa azul com adesivo do curso de TI e o nome 'Ana' escrito na tampa."></textarea>
+            <button class="btn btn-primary w-100" type="submit">Enviar reivindicação</button>
+          {% else %}
+            <p class="small texto-suave">Entre com sua conta Senac para reivindicar este item.</p>
+            <a class="btn btn-primary w-100" href="{{ url_for('entrar', next=pagina) }}">Entre para reivindicar</a>
+          {% endif %}
+        </div>
+      </form>
+      {% endif %}
+
+      {% if usuario %}
+      <div class="card"><div class="card-body">
+        <h2 class="texto-sobretitulo mb-3">{% if dono %}Reivindicações recebidas{% else %}Suas reivindicações{% endif %}</h2>
+        {% if reivindicacoes %}
+        <ul class="list-unstyled d-grid gap-3 mb-0">
+          {% for r in reivindicacoes %}
+          <li class="border rounded p-3 small">
+            <div class="d-flex justify-content-between gap-2">
+              <strong>@{{ r.autor_username }}</strong>
+              <span class="texto-suave">{{ r.criado_em|data_br }}</span>
+            </div>
+            <p class="mt-1 mb-2 texto-suave">{{ r.mensagem }}</p>
+            {% if dono and r.status == 'pendente' %}
+            <form method="post" action="{{ url_for('responder', reivindicacao_id=r.id) }}" class="d-flex gap-2">
+              <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+              <input type="hidden" name="voltar" value="{{ pagina }}">
+              <button class="btn btn-sm btn-primary" name="acao" value="confirmar" type="submit">Confirmar dono</button>
+              <button class="btn btn-sm btn-outline-secondary" name="acao" value="recusar" type="submit">Recusar</button>
+            </form>
+            {% else %}
+            <span class="texto-suave">Situação: {{ STATUS_REIVINDICACAO[r.status] }}</span>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="small texto-suave mb-0">Nenhuma ainda.</p>
+        {% endif %}
+      </div></div>
+      {% endif %}
+    </aside>
+  </div>
+</div>
+{% endblock %}

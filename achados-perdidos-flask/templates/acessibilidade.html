@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Acessibilidade — Achados &amp; Perdidos Senac{% endblock %}
+{% block conteudo %}
+<div class="container pt-4" style="max-width: 780px">
+  <h1 class="fonte-titulo h2">Recursos de acessibilidade</h1>
+  <p class="texto-suave">O portal foi pensado para ser usado por todas as pessoas da comunidade escolar.</p>
+  <dl class="row g-3">
+    {% for nome, texto in recursos %}
+    <div class="col-12"><div class="card"><div class="card-body">
+      <dt class="h5 mb-1">{{ nome }}</dt>
+      <dd class="texto-suave mb-0">{{ texto }}</dd>
+    </div></div></div>
+    {% endfor %}
+  </dl>
+</div>
+{% endblock %}

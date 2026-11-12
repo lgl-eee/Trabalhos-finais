@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo %}Entrar — Achados &amp; Perdidos Senac{% endblock %}
+{% block conteudo %}
+<div class="container pt-5" style="max-width: 460px">
+  <div class="card p-4">
+    <h1 class="fonte-titulo h3">Acesso do aluno Senac</h1>
+    <p class="texto-suave">Entre para registrar objetos perdidos ou encontrados na sua unidade.</p>
+    {% if erro %}<div class="alert alert-danger" role="alert">{{ erro }}</div>{% endif %}
+    <form method="post" class="d-grid gap-3">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="next" value="{{ destino }}">
+      <div>
+        <label for="login" class="form-label">E-mail ou nome de usuário</label>
+        <input id="login" name="login" class="form-control" value="{{ login }}" required autocomplete="username" autofocus>
+      </div>
+      <div>
+        <label for="senha" class="form-label">Senha</label>
+        <input id="senha" name="senha" type="password" class="form-control" required autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary" type="submit">Entrar</button>
+    </form>
+    <p class="small texto-suave mt-3 mb-0">Ainda não tem conta? <a href="{{ url_for('cadastrar') }}">Criar conta</a></p>
+  </div>
+</div>
+{% endblock %}

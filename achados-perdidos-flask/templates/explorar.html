@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% from "_macros.html" import card_item with context %}
+{% block titulo %}Mural de itens — Achados &amp; Perdidos Senac{% endblock %}
+{% block conteudo %}
+<div class="container pt-4">
+  <h1 class="fonte-titulo h2">Mural de achados e perdidos</h1>
+  <p class="texto-suave">Use os filtros para encontrar o objeto pela unidade, categoria ou situação.</p>
+
+  <form method="get" action="{{ url_for('explorar') }}" class="card p-3 mb-4" role="search">
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <label for="busca" class="form-label">O que você procura?</label>
+        <input id="busca" name="q" type="search" class="form-control" value="{{ filtros.q }}"
+               placeholder="Ex.: garrafa azul, carteirinha, fone">
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <label for="tipo" class="form-label">Tipo</label>
+        <select id="tipo" name="tipo" class="form-select">
+          <option value="">Todos</option>
+          {% for chave, info in TIPOS.items() %}
+          <option value="{{ chave }}" {% if filtros.tipo == chave %}selected{% endif %}>{{ info.rotulo }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <label for="categoria" class="form-label">Categoria</label>
+        <select id="categoria" name="categoria" class="form-select">
+          <option value="">Todas</option>
+          {% for c in CATEGORIAS %}<option {% if filtros.categoria == c %}selected{% endif %}>{{ c }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <label for="unidade" class="form-label">Unidade</label>
+        <select id="unidade" name="unidade" class="form-select">
+          <option value="">Todas</option>
+          {% for u in UNIDADES %}<option {% if filtros.unidade == u %}selected{% endif %}>{{ u }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <label for="status" class="form-label">Situação</label>
+        <select id="status" name="status" class="form-select">
+          {% for chave, info in STATUS_ITEM.items() %}
+          <option value="{{ chave }}" {% if filtros.status == chave %}selected{% endif %}>{{ info.rotulo }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <label for="ordem" class="form-label">Ordenar</label>
+        <select id="ordem" name="ordem" class="form-select">
+          <option value="recentes" {% if filtros.ordem != 'antigos' %}selected{% endif %}>Mais recentes</option>
+          <option value="antigos" {% if filtros.ordem == 'antigos' %}selected{% endif %}>Mais antigos</option>
+        </select>
+      </div>
+      <div class="col-lg-3 d-flex align-items-end gap-2">
+        <button class="btn btn-primary flex-fill" type="submit"><i class="bi bi-search" aria-hidden="true"></i> Buscar</button>
+        <a class="btn btn-outline-secondary" href="{{ url_for('explorar') }}">Limpar</a>
+      </div>
+    </div>
+  </form>
+
+  <p class="small texto-suave" role="status">{{ itens|length }} item(ns) encontrado(s)</p>
+  {% if itens %}
+  <div class="row g-3">
+    {% for item in itens %}<div class="col-sm-6 col-lg-3">{{ card_item(item) }}</div>{% endfor %}
+  </div>
+  {% else %}
+  <p class="texto-suave">Nenhum item corresponde a esses filtros. Tente outra palavra ou
+    <a href="{{ url_for('registrar') }}">registre o seu item perdido</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}

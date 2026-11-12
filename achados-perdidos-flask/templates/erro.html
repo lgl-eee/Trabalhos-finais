@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }} — Achados &amp; Perdidos Senac{% endblock %}
+{% block conteudo %}
+<div class="container pt-5 text-center" style="max-width: 560px">
+  <p class="display-3 fonte-titulo texto-suave mb-0">{{ codigo }}</p>
+  <h1 class="fonte-titulo h3">{{ titulo }}</h1>
+  <p class="texto-suave">{{ mensagem }}</p>
+  <a class="btn btn-primary" href="{{ url_for('index') }}">Voltar ao início</a>
+  <a class="btn btn-outline-primary" href="{{ url_for('explorar') }}">Ver o mural</a>
+</div>
+{% endblock %}

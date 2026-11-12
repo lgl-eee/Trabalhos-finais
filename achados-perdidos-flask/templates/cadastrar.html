@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_macros.html" import erro_campo with context %}
+{% block titulo %}Criar conta — Achados &amp; Perdidos Senac{% endblock %}
+{% block conteudo %}
+<div class="container pt-5" style="max-width: 460px">
+  <div class="card p-4">
+    <h1 class="fonte-titulo h3">Criar conta</h1>
+    <p class="texto-suave">Use seu e-mail institucional para registrar e reivindicar itens.</p>
+    <form method="post" class="d-grid gap-3" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <div>
+        <label for="nome" class="form-label">Nome completo</label>
+        <input id="nome" name="nome" class="form-control {% if erros.nome %}is-invalid{% endif %}" value="{{ dados.nome }}" required autocomplete="name">
+        {{ erro_campo(erros, 'nome') }}
+      </div>
+      <div>
+        <label for="username" class="form-label">Nome de usuário</label>
+        <input id="username" name="username" class="form-control {% if erros.username %}is-invalid{% endif %}" value="{{ dados.username }}" required autocomplete="username">
+        {{ erro_campo(erros, 'username') }}
+      </div>
+      <div>
+        <label for="email" class="form-label">E-mail</label>
+        <input id="email" name="email" type="email" class="form-control {% if erros.email %}is-invalid{% endif %}" value="{{ dados.email }}" required autocomplete="email">
+        {{ erro_campo(erros, 'email') }}
+      </div>
+      <div>
+        <label for="senha" class="form-label">Senha</label>
+        <input id="senha" name="senha" type="password" class="form-control {% if erros.senha %}is-invalid{% endif %}" required minlength="6" autocomplete="new-password">
+        {{ erro_campo(erros, 'senha') }}
+      </div>
+      <button class="btn btn-primary" type="submit">Criar minha conta</button>
+    </form>
+    <p class="small texto-suave mt-3 mb-0">Já tem conta? <a href="{{ url_for('entrar') }}">Entrar</a></p>
+  </div>
+</div>
+{% endblock %}
